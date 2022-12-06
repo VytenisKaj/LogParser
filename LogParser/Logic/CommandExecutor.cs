@@ -49,7 +49,7 @@ namespace LogParser.Logic
             }
             if(command.ToLower() == "use_default")
             {
-                return _parser.SetFile("file 20220601182758.csv");
+                return _parser.SetFile("file ./../../../Data/20220601182758.csv");
             }
                     
             return ReturnCodes.CommandNotFound;

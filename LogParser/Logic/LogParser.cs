@@ -101,16 +101,29 @@ namespace LogParser.Logic
         {
             foreach(string query in queries)
             {
-                string[] columnAndValue = query.Contains("!=") ? query.Split("!=") : query.Split("=");
-                string column = columnAndValue[0].Trim();
-                string value = columnAndValue[1].Trim();
-                bool queryResult = query.Contains("!=") ? !EntryContainsValueInColumn(entryAsElements, column, value) : EntryContainsValueInColumn(entryAsElements, column, value);
-                if (!queryResult)
+                if (!QueryPassedByEntry(entryAsElements, query))
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        private bool QueryPassedByEntry(string[] entryAsElements, string query)
+        {
+            string[] columnAndValue = query.Contains("!=") ? query.Split("!=") : query.Split("=");
+            string column = columnAndValue[0].Trim();
+            string value = columnAndValue[1].Trim();
+            if (value == String.Empty && query.Contains("!="))
+            {
+                return EntryValueInColumnIsEmpty(entryAsElements, column);
+            }
+            return query.Contains("!=") ? !EntryContainsValueInColumn(entryAsElements, column, value) : EntryContainsValueInColumn(entryAsElements, column, value);
+        }
+
+        private bool EntryValueInColumnIsEmpty(string[] entryAsElements, string column)
+        {
+            return entryAsElements[Array.IndexOf(CsvColumnNames, column)] != String.Empty;
         }
 
         private bool EntryContainsValueInColumn(string[] entryAsElements, string column, string value)

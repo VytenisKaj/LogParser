@@ -112,9 +112,8 @@ namespace Log_Parser.Test.IntegrationTests
 
         [Theory]
         [InlineData("query col1=something > out.json")]
-        [InlineData("query col1=")]
+        [InlineData("query col1=>out.json")]
         [InlineData("query col1 =      something    >                out.json")]
-        [InlineData("query col1!=something")]
         [InlineData("query col1=something&&col2=something>out.json")]
         [InlineData("query col1=something&&col2=something||col1!=something> out.json")]
         [InlineData("query col1 = something && col2 = something || col1 != something >out.json")]
